@@ -383,8 +383,8 @@ function App() {
                       </TableCell>
                       <TableCell align="right">{formatDateTime(row.date)}</TableCell>
                       <TableCell align="right">{tableFloatFormat(row.delta.bulusma)}</TableCell>
-                      <TableCell align="right">{tableFloatFormat(row.delta.evlenme)}</TableCell>
                       <TableCell align="right">{tableFloatFormat(row.delta.opusme)}</TableCell>
+                      <TableCell align="right">{tableFloatFormat(row.delta.evlenme)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
