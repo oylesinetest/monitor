@@ -346,9 +346,9 @@ function App() {
                 }} />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="bulusma" stroke="#8884d8" name="Buluşma"/>
-              <Line type="monotone" dataKey="opusme" stroke="#8884d8" name="Öpüşme"/>
-              <Line type="monotone" dataKey="evlenme" stroke="#8884d8" name="Evlenme"/>
+              <Line type="monotone" dataKey="bulusma" stroke="blue" name="Buluşma" strokeWidth={5}/>
+              <Line type="monotone" dataKey="opusme" stroke="pink" name="Öpüşme" strokeWidth={5}/>
+              <Line type="monotone" dataKey="evlenme" stroke="green" name="Evlenme" strokeWidth={5}/>
             </LineChart>
           </ResponsiveContainer>
           <div>
