@@ -1,0 +1,5 @@
+{
+  "clientId": "ucWzvrwoSrdPZvQUSBRgZajn"
+  "secret": "FbnZKrLAI+YM9eOKHZm63Z5QDWgS1yloS82.r3EJZTwiSNMgQ-O5mWpfM4qYyEfR3P6Uwmy6+eUXAaIuPFxU5b2rfl7l1o0JLR,hZCO9b+kl9OH5_rpN99NGuoPoTfD9"
+  "token": "AstraCS:ucWzvrwoSrdPZvQUSBRgZajn:4971a1ce57feb0dced9dd5de67934d315d38e3b2bf1190dbbbfe3cec4c8047b2"
+}
