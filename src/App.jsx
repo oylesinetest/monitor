@@ -168,6 +168,17 @@ function changeForValueAndAction(valueType, actionType) {
           default:
             identityChange();
         }
+        case 'Umursamazlik':
+          switch (valueType) {
+            case 'Buluşma':
+              return percentChangeLimit(-0.06, 80);
+            case 'Öpüşme':
+              return percentChangeLimit(-0.04, 80);
+            case 'Evlenme':
+              return percentChangeLimit(-0.02, 80);
+            default:
+              identityChange();
+          }
     default:
       return identityChange();
   }
@@ -412,6 +423,7 @@ function App() {
                   <MenuItem value={'Karsilikli Trip'}>Karsilikli Trip</MenuItem>
                   <MenuItem value={'Birlikte Oyun'}>Birlikte Oyun</MenuItem>
                   <MenuItem value={'Birlikte Dizi'}>Birlikte Dizi</MenuItem>
+                  <MenuItem value={'Umursamazlik'}>Umursamazlik</MenuItem>
                 </Select>
               </FormControl>
             </Box>
