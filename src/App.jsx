@@ -171,11 +171,11 @@ function changeForValueAndAction(valueType, actionType) {
         case 'Umursamazlik':
           switch (valueType) {
             case 'Buluşma':
-              return percentChangeLimit(-0.06, 80);
+              return directChangeLimit(-3, 80);
             case 'Öpüşme':
-              return percentChangeLimit(-0.04, 80);
+              return directChangeLimit(-1, 80);
             case 'Evlenme':
-              return percentChangeLimit(-0.02, 80);
+              return directChangeLimit(-2, 80);
             default:
               identityChange();
           }
