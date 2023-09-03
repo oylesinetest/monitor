@@ -216,9 +216,7 @@ function App() {
     setSelectedAction(event.target.value);
   };
 
-
   const startingDay = new Date('2023-09-01');
-  const today = Date.now();
   const startingValues = {
     bulusma: 30,
     opusme: 20,
@@ -232,7 +230,11 @@ function App() {
       date: new Date(obj.time),
     }));
 
-    const dateRange = getDates(startingDay, today);
+    const lastDate = new Date(Date.now());
+    lastDate.setDate(lastDate.getDate() + 1);
+    const lastActionDate = sortedActions[sortedActions.length - 1];
+    const maxDate = lastActionDate > lastDate ? lastActionDate : lastDate;
+    const dateRange = getDates(startingDay, maxDate);
 
     var processedValues = dateRange.map(date => ({
       date: date,
