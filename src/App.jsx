@@ -18,8 +18,8 @@ import Paper from '@mui/material/Paper';
 import { CircularProgress } from '@mui/material';
 import ProgressBar from "@ramonak/react-progress-bar";
 
-function tableFloatFormat (n) {
-  return (n<0?"":"+") + n.toFixed(2);
+function tableFloatFormat(n) {
+  return (n < 0 ? "" : "+") + n.toFixed(2);
 }
 
 function sumValues(obj1, obj2) {
@@ -144,41 +144,41 @@ function changeForValueAndAction(valueType, actionType) {
         default:
           identityChange();
       }
-    
-      case 'Birlikte Oyun':
-        switch (valueType) {
-          case 'Buluşma':
-            return directChangeLimit(5, 50);
-          case 'Öpüşme':
-            return directChangeLimit(3, 30);
-          case 'Evlenme':
-            return directChangeLimit(2, 40);
-          default:
-            identityChange();
-        }
-            
-      case 'Birlikte Dizi':
-        switch (valueType) {
-          case 'Buluşma':
-            return directChangeLimit(1, 80);
-          case 'Öpüşme':
-            return directChangeLimit(1, 80);
-          case 'Evlenme':
-            return directChangeLimit(2, 80);
-          default:
-            identityChange();
-        }
-        case 'Umursamazlik':
-          switch (valueType) {
-            case 'Buluşma':
-              return directChangeLimit(-3, 80);
-            case 'Öpüşme':
-              return directChangeLimit(-1, 80);
-            case 'Evlenme':
-              return directChangeLimit(-2, 80);
-            default:
-              identityChange();
-          }
+
+    case 'Birlikte Oyun':
+      switch (valueType) {
+        case 'Buluşma':
+          return directChangeLimit(5, 50);
+        case 'Öpüşme':
+          return directChangeLimit(3, 30);
+        case 'Evlenme':
+          return directChangeLimit(2, 40);
+        default:
+          identityChange();
+      }
+
+    case 'Birlikte Dizi':
+      switch (valueType) {
+        case 'Buluşma':
+          return directChangeLimit(1, 80);
+        case 'Öpüşme':
+          return directChangeLimit(1, 80);
+        case 'Evlenme':
+          return directChangeLimit(2, 80);
+        default:
+          identityChange();
+      }
+    case 'Umursamazlik':
+      switch (valueType) {
+        case 'Buluşma':
+          return directChangeLimit(-3, 80);
+        case 'Öpüşme':
+          return directChangeLimit(-1, 80);
+        case 'Evlenme':
+          return directChangeLimit(-2, 80);
+        default:
+          identityChange();
+      }
     default:
       return identityChange();
   }
@@ -254,7 +254,7 @@ function App() {
     //Add interest for every day
     processedValues = processedValues.map(obj => ({
       ...obj,
-      actions: [{type:'Faiz', time: obj.date.toTimeString, date: obj.date}, ...obj.actions],
+      actions: [{ type: 'Faiz', time: obj.date.toTimeString, date: obj.date }, ...obj.actions],
     }));
 
     //Process the action types
@@ -343,100 +343,103 @@ function App() {
   }
 
   return (
-    <div style={{ height: "100vh", width: "100vh" }}>
-      {isLoading ? (
-        <CircularProgress color="success" />
-      ) : (
-        <div style={{ height: "100vh", width: "100vh" }}>
-          <ResponsiveContainer width="100%" height="50%">
-            <LineChart data={dateFormattedData}
-              onClick={onChartClick}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-                <YAxis type="number" domain={[0, 100]} tickFormatter={(tick) => {
-                  return `${tick}%`;
+    <div className="container">
+      <div className="left-panel">
+        <div className="left-top">
+          {isLoading ? (
+            <CircularProgress color="success" />
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={dateFormattedData}
+                onClick={onChartClick}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis type="number" domain={[0, 100]} allowDataOverflow={true} tickFormatter={(tick) => {
+                  return `${tick.toFixed(0)}%`;
                 }} />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="bulusma" stroke="blue" name="Buluşma" strokeWidth={5}/>
-              <Line type="monotone" dataKey="opusme" stroke="pink" name="Öpüşme" strokeWidth={5}/>
-              <Line type="monotone" dataKey="evlenme" stroke="green" name="Evlenme" strokeWidth={5}/>
-            </LineChart>
-          </ResponsiveContainer>
-          <div>
-            <ProgressBar completed={chosenDayValues().bulusma} maxCompleted={100} customLabel='Buluşma' height='40px' transitionDuration= '3s' animateOnRender={true}/>
-            <br></br>
-            <ProgressBar completed={chosenDayValues().opusme} maxCompleted={100} customLabel='Öpüşme' height='40px' transitionDuration= '3s' animateOnRender={true}/>
-            <br></br>
-            <ProgressBar completed={chosenDayValues().evlenme} maxCompleted={100} customLabel='Evlenme' height='40px' transitionDuration= '3s' animateOnRender={true}/>
-          </div>
-            <br></br>
-          <div>
-            
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Olay</TableCell>
-                    <TableCell align="right">Zaman</TableCell>
-                    <TableCell align="right">Buluşma</TableCell>
-                    <TableCell align="right">Öpüşme</TableCell>
-                    <TableCell align="right">Evlenme</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {chosenDayActions().map((row, index) => (
-                    <TableRow
-                      key={"key"+index}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.type}
-                      </TableCell>
-                      <TableCell align="right">{formatDateTime(row.date)}</TableCell>
-                      <TableCell align="right">{tableFloatFormat(row.delta.bulusma)}</TableCell>
-                      <TableCell align="right">{tableFloatFormat(row.delta.opusme)}</TableCell>
-                      <TableCell align="right">{tableFloatFormat(row.delta.evlenme)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-            <br></br>
-          <div>
-            <></>
-            <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Olay</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={selectedAction}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={'Asksal Olay'}>Asksal Olay</MenuItem>
-                  <MenuItem value={'Ayak Fotosu'}>Ayak Fotosu</MenuItem>
-                  <MenuItem value={'Selfie'}>Selfie</MenuItem>
-                  <MenuItem value={'Kawga'}>Kawga</MenuItem>
-                  <MenuItem value={'Trip'}>Trip</MenuItem>
-                  <MenuItem value={'Karsilikli Trip'}>Karsilikli Trip</MenuItem>
-                  <MenuItem value={'Birlikte Oyun'}>Birlikte Oyun</MenuItem>
-                  <MenuItem value={'Birlikte Dizi'}>Birlikte Dizi</MenuItem>
-                  <MenuItem value={'Umursamazlik'}>Umursamazlik</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <br></br>
-            <Button variant="contained" onClick={onSubmitButtonClick}>Olay ekle</Button>
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="bulusma" stroke="blue" name="Buluşma" strokeWidth={5} />
+                <Line type="monotone" dataKey="opusme" stroke="pink" name="Öpüşme" strokeWidth={5} />
+                <Line type="monotone" dataKey="evlenme" stroke="green" name="Evlenme" strokeWidth={5} />
+              </LineChart>
+            </ResponsiveContainer>
+          )
+          }
+        </div>
+        <div className="left-bottom">
+        <div className="centered-div">
+          <div className="progress-bar"><ProgressBar completed={chosenDayValues().bulusma} maxCompleted={100} customLabel='Buluşma' height='40px' transitionDuration='3s' animateOnRender={true} /></div>
+          <div className="progress-bar"><ProgressBar completed={chosenDayValues().opusme} maxCompleted={100} customLabel='Öpüşme' height='40px' transitionDuration='3s' animateOnRender={true} style={{ padding: '10px' }} /></div>
+          <div className="progress-bar"><ProgressBar completed={chosenDayValues().evlenme} maxCompleted={100} customLabel='Evlenme' height='40px' transitionDuration='3s' animateOnRender={true} style={{ padding: '10px' }} /></div>
           </div>
         </div>
-      )}
+      </div>
+      <div className="right-panel">
+        <div className="right-top">
+        <div className="centered-div">
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Olay</TableCell>
+                  <TableCell align="right">Zaman</TableCell>
+                  <TableCell align="right">Buluşma</TableCell>
+                  <TableCell align="right">Öpüşme</TableCell>
+                  <TableCell align="right">Evlenme</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {chosenDayActions().map((row, index) => (
+                  <TableRow
+                    key={"key" + index}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.type}
+                    </TableCell>
+                    <TableCell align="right">{formatDateTime(row.date)}</TableCell>
+                    <TableCell align="right">{tableFloatFormat(row.delta.bulusma)}</TableCell>
+                    <TableCell align="right">{tableFloatFormat(row.delta.opusme)}</TableCell>
+                    <TableCell align="right">{tableFloatFormat(row.delta.evlenme)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+        </div>
+        <div className="right-bottom">
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Olay</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectedAction}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value={'Asksal Olay'}>Asksal Olay</MenuItem>
+                <MenuItem value={'Ayak Fotosu'}>Ayak Fotosu</MenuItem>
+                <MenuItem value={'Selfie'}>Selfie</MenuItem>
+                <MenuItem value={'Kawga'}>Kawga</MenuItem>
+                <MenuItem value={'Trip'}>Trip</MenuItem>
+                <MenuItem value={'Karsilikli Trip'}>Karsilikli Trip</MenuItem>
+                <MenuItem value={'Birlikte Oyun'}>Birlikte Oyun</MenuItem>
+                <MenuItem value={'Birlikte Dizi'}>Birlikte Dizi</MenuItem>
+                <MenuItem value={'Umursamazlik'}>Umursamazlik</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <br></br>
+          <Button variant="contained" onClick={onSubmitButtonClick}>Olay ekle</Button>
+        </div>
+      </div>
     </div>
+  );
 
-  )
 }
 
 export default App
