@@ -186,7 +186,11 @@ function changeForValueAndAction(valueType, actionType) {
 
 function deltaValueWithAction(value, valueType, actionType) {
   const mutator = changeForValueAndAction(valueType, actionType);
-  return mutator(parseFloat(value));
+  const mutatorChange = mutator(parseFloat(value));
+  const minChange = -value;
+  const maxChange = 100 - value;
+  
+  return Math.min(Math.max(mutatorChange, minChange), maxChange);
 }
 
 function deltaValuesWithAction(values, action) {
